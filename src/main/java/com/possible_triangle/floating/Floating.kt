@@ -8,7 +8,6 @@ import thedarkcolour.kotlinforforge.forge.MOD_CONTEXT
 
 @Mod(Floating.MODID)
 class Floating {
-
     companion object {
         const val MODID = "floating"
         val WORLD_TYPES = DeferredRegister.create(ForgeRegistries.WORLD_TYPES, MODID)!!
@@ -21,5 +20,4 @@ class Floating {
 
         WORLD_TYPES.register(MOD_CONTEXT.getKEventBus())
     }
-
 }

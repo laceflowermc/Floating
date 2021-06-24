@@ -1,19 +1,24 @@
 buildscript {
     repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
-        jcenter()
         mavenCentral()
-        maven { url = 'https://dist.creeper.host/Sponge/maven' }
+        maven {
+            name "MixinGradle"
+            url = 'https://repo.spongepowered.org/repository/maven-snapshots/'
+        }
+        maven {
+           name "ForgeMaven"
+           url = 'https://files.minecraftforge.net/maven'
+        }
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
-        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.10"
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.1+', changing: true
+        classpath "org.spongepowered:mixingradle:0.7-20210422.120709-1"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.10"
+        classpath "org.spongepowered:mixin:0.8.3-20210226.125613-1"
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'kotlin'
@@ -31,6 +36,7 @@ ext.config = parseConfig(configFile)
 
 mixin {
     add sourceSets.main, "${config.mod_id}.refmap.json"
+    disableTargetValidator = true
 }
 
 version = config.mod_version
@@ -94,15 +100,24 @@ minecraft {
 
 repositories {
     maven {
+        name = 'SpongePowered'
+        url = 'https://repo.spongepowered.org/repository/maven-snapshots/'
+    }
+    maven {
         name = 'kotlinforforge'
         url = 'https://thedarkcolour.github.io/KotlinForForge/'
+    }
+    maven {
+        name = 'cursemaven'
+        url = "https://www.cursemaven.com"
     }
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${config.mc_version}-${config.forge_version}"
+    annotationProcessor("org.spongepowered:mixin:0.8.3-20210226.125613-1:processor")
     implementation "thedarkcolour:kotlinforforge:${config.kotlin_mod_version}"
-    implementation fg.deobf("com.github.glitchfiend.biomesoplenty:BiomesOPlenty:${config.bop_version}:universal")
+    implementation fg.deobf("curse.maven:bop-220318:3360420")
 }
 
 compileKotlin {

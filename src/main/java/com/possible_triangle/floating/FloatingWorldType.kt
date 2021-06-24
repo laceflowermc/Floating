@@ -11,5 +11,5 @@ import net.minecraftforge.common.world.ForgeWorldType
 
 class FloatingWorldType : ForgeWorldType({ biomeReg, settingsReg, seed ->
     val biomes = OverworldBiomeProvider(seed, false, false, biomeReg)
-    NoiseChunkGenerator(biomes, seed) { settingsReg.getOrThrow(DimensionSettings.field_242739_h) }
+    NoiseChunkGenerator(biomes, seed) { settingsReg.getOrThrow(DimensionSettings.FLOATING_ISLANDS) }
 })
